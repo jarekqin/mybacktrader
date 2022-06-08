@@ -79,6 +79,7 @@ portfilio_stats = backtest_result.analyzers.getbyname('PyFolio')
 returns, positions, transations, gross_lev = portfilio_stats.get_pf_items()
 returns.index = returns.index.tz_convert(None)
 
+qs.plots.daily_returns(returns)
 qs.reports.html(returns, output='stats.html', title='SMA ports', rf=0.0)
 
 backtest_result.analyzers.timereturn.print()
