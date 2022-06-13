@@ -38,27 +38,38 @@ class SmaCross(bt.Strategy):
 
     def __init__(self):
         # 移动平均线指标
-        self.move_average = bt.ind.MovingAverageSimple(
-            self.data, period=self.params.period, subplot=True)
+        # self.move_average = bt.ind.MovingAverageSimple(self.data, period=self.params.period, subplot=True,
+        #                                                plotname='mysma')
+        # use talib function
+        self.move_average=bt.talib.SMA(self.data,timeperiod=self.p.period)
 
-    def next(self):
-        # 输出回撤值，今日的drawdown还没有，故输出昨日的
-        self.log(f'Benchmark: {self.stats.benchmark.benchmark[0]:.2f}')
-        self.log(f'Broker: {self.stats.broker.cash[0]:.2f}')
-        self.log(f'BuySell: {self.stats.buysell.buy[0]:.2f}')
-        self.log(f'DrawDown: {self.stats.drawdown.drawdown[0]:.2f}')
-        self.log(f'TimeReturn: {self.stats.timereturn.timereturn[0]:.2f}')
-        self.log(f'Trades: {self.stats.trades.pnlplus[0]:.2f}')
-        # self.log(f'LogReturns: {self.stats.logreturns.logret1[0]:.2f}')
+        # set plot
+        # set plot name
+        # preferred set into above
+        # self.move_average.plotinfo.plotname = 'mysma'
+        # # set plotted at independent subplot
+        # self.move_average.plotinfo.subplot = True
+        # self.move_average.plotinfo.plotmaster = self.data
 
-        if not self.position:  # 还没有仓位
-            # 当日收盘价上穿5日均线，创建买单，买入100股
-            if self.data.close[
-                -1] < self.move_average[-1] and self.data > self.move_average:
-                self.log('创建买单')
-                self.buy(size=100)
-        # 有仓位，并且当日收盘价下破5日均线，创建卖单，卖出100股
-        elif self.data.close[
-            -1] > self.move_average[-1] and self.data < self.move_average:
-            self.log('创建卖单')
-            self.sell(size=100)
+
+def next(self):
+    # 输出回撤值，今日的drawdown还没有，故输出昨日的
+    self.log(f'Benchmark: {self.stats.benchmark.benchmark[0]:.2f}')
+    self.log(f'Broker: {self.stats.broker.cash[0]:.2f}')
+    self.log(f'BuySell: {self.stats.buysell.buy[0]:.2f}')
+    self.log(f'DrawDown: {self.stats.drawdown.drawdown[0]:.2f}')
+    self.log(f'TimeReturn: {self.stats.timereturn.timereturn[0]:.2f}')
+    self.log(f'Trades: {self.stats.trades.pnlplus[0]:.2f}')
+    # self.log(f'LogReturns: {self.stats.logreturns.logret1[0]:.2f}')
+
+    if not self.position:  # 还没有仓位
+        # 当日收盘价上穿5日均线，创建买单，买入100股
+        if self.data.close[
+            -1] < self.move_average[-1] and self.data > self.move_average:
+            self.log('创建买单')
+            self.buy(size=100)
+    # 有仓位，并且当日收盘价下破5日均线，创建卖单，卖出100股
+    elif self.data.close[
+        -1] > self.move_average[-1] and self.data < self.move_average:
+        self.log('创建卖单')
+        self.sell(size=100)
