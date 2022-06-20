@@ -38,3 +38,5 @@ class ChineseFuturesCommissionSchemeSize(bt.CommissionInfo):
     def _getcommission(self, size, price, pseudoexec):
         abscommission = size * price * self.p.commission
         return abs(abscommission)
+
+
