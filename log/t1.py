@@ -12,18 +12,18 @@ MAIN_OPERATION_NAME = 'Operations'
 MAIN_OPERATION_ATTRIB = {'id': 'operations', 'path': 'you see2', 'test': 'test2'}
 
 # sub module template
-SUB_MODULE_NAME = ['sub1', 'sub2', 'sub3']
+SUB_MODULE_NAME = ['Module', 'Module', 'Module']
 SUB_MODULE_ATTRIB = [
-    {'id': 'alpha', 'name': '1', 'test': 'test1'},
-    {'id': 'alpha', 'name': '2', 'test': 'test2'},
-    {'id': 'alpha', 'name': '3', 'test': 'test3'}
+    {'id': 'alphasale', 'name': '1', 'test': 'test1'},
+    {'id': 'alphapctchange', 'name': '2', 'test': 'test2'},
+    {'id': 'alphaorder', 'name': '3', 'test': 'test3'}
 ]
 #sub operation template
-SUB_OPEARTION_NAME = ['op1', 'op2', 'op3']
+SUB_OPEARTION_NAME = ['Operation', 'Operation', 'Operation']
 SUB_OPEARTION_ATTRIB = [
-    {'id': 'sub_op1', 'name': 'opo1', 'test1': 'test1'},
-    {'id': 'sub_op2', 'name': 'opo2', 'test2': 'test2'},
-    {'id': 'sub_op3', 'name': 'opo3', 'test3': 'test3'}
+    {'id': 'alphafactorise', 'name': 'opo1', 'test1': 'test1'},
+    {'id': 'alphacal', 'name': 'opo2', 'test2': 'test2'},
+    {'id': 'alphaoutput', 'name': 'opo3', 'test3': 'test3'}
 ]
 
 class XMLTools(object):
@@ -56,6 +56,7 @@ class XMLTools(object):
 
     def main(self):
         if self.local_xml_path in [None, '']:
+            # generate mpalte with default variable and format
             self.create_modules(MAIN_NAME,**MAIN_ATTRIB)
             self.create_sub_module(self.root,MAIN_MODULE_NAME, **MAIN_MODULE_ATTRIB)
             self.create_sub_module(self.root,MAIN_OPERATION_NAME, **MAIN_OPERATION_ATTRIB)
@@ -63,9 +64,12 @@ class XMLTools(object):
                 self.create_sub_module(self.root,sub_module, MAIN_MODULE_NAME,**sub_module_attrib)
             for sub_operation,sub_operation_attrib in zip(SUB_OPEARTION_NAME,SUB_OPEARTION_ATTRIB):
                 self.create_sub_module(self.root,sub_operation,MAIN_OPERATION_NAME, **sub_operation_attrib)
+        else:
+            pass
 
         fp = open(self.save_xml_path, 'w')
-        fp.write(self.doc_generator.toprettyxml(indent=''))
+        fp.write(self.doc_generator.toprettyxml(indent='\t'))
+        fp.close()
 
 
 if __name__ == '__main__':
