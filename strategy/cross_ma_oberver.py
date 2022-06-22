@@ -1,6 +1,13 @@
 import backtrader as bt
 from datetime import datetime
 
+class LongOnly(bt.Sizer):
+    params=(('stake',100),)
+    def _getsizing(self, comminfo, cash, data, isbuy):
+        if isbuy:
+            return self.position.stake
+        position=self.broker.getposition(data)
+        return min(self.position.stake,position.size)
 
 # 创建策略类
 class SmaCross(bt.Strategy):

@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<bookstore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="bookstore.xsd">
+<book genre="XML">
+<title>Python处理XML之Minidom</title>
+<author>
+<first-name>张</first-name>
+<last-name>三</last-name>
+</author>
+<price>28</price>
+</book>
+<book genre="Web">
+<title>Python写网站之Django</title>
+<author>
+<first-name>李</first-name>
+<last-name>四</last-name>
+</author>
+<price>40</price>
+</book>
+</bookstore>
